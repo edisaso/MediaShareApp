@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player</title>
+    <meta http-equiv="refresh" content="{{ refresh_time }}">
+</head>
+<body>
+    <h1>Media Player:</h1>
+    {% if video_id %}
+        <iframe id="player" width="560" height="315" src="https://www.youtube.com/embed/{{ video_id }}?autoplay=1&enablejsapi=1" frameborder="0" allowfullscreen></iframe>
+        <p id="time_remaining">Time remaining: <span id="time"></span></p>
+        <script src="https://www.youtube.com/iframe_api"></script>
+        <script>
+            var player;
+            function onYouTubeIframeAPIReady() {
+                player = new YT.Player('player', {
+                    events: {
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            }
+            function onPlayerStateChange(event) {
+                setInterval(function() {
+                    if (player.getPlayerState() === 0) { // 0 means the video has ended
+                        // Send a POST request to the /skip route
+                        $.post('/skip', function() {
+                            // Redirect to the /player route
+                            window.location.href = '/player';
+                        });
+                    }
+                }, 1000); // Check every second
+            }
+        </script>
+    {% else %}
+        <p>No songs in the playlist.</p>
+    {% endif %}
+</body>
+</html>
