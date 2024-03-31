@@ -21,8 +21,9 @@ def add_song():
 def skip_song():
     if playlist:
         # Remove the current song from the playlist
-        playlist.pop(0)
-    return jsonify({'status': 'success'}), 200
+        skipped_element = playlist.pop(0)
+        return f"Skipped {skipped_element}", 200
+    return "Playlist is empty", 400
 
 
 @app.route('/player')
