@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>MEDIA SHARE</title>
 </head>
 <body>
@@ -10,15 +12,21 @@
         <input type="text" id="url" name="url"><br>
         <input type="submit" value="Add to playlist">
     </form>
-    <form action="/skip" method="post">
+    <form action="skipForm" method="post">
         <input type="submit" value="Skip current song">
     </form>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $('#addForm').submit(function(e) {
             e.preventDefault();
             $.post('/add', $(this).serialize(), function(data) {
+                alert(data);
+            });
+        });
+    </script>
+    <script>
+        $('#skipForm').submit(function(e) {
+            e.preventDefault();
+            $.post('/skip', $(this).serialize(), function(data) {
                 alert(data);
             });
         });
